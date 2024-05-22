@@ -157,3 +157,10 @@ if selected_display_name:
         st.subheader(f'Financial Metrics for {selected_display_name}')
         st.write(f"**Market Cap:** {company_info[selected_company]['market_cap']}")
         st.write(f"**Beta of stock price against Bitcoin's Price:** {
+                # Add company description
+    st.write(f"**Company Description:** {company_info[selected_company]['description']}")
+    
+    # Plot stock and Bitcoin prices
+    plot_prices(company_data, bitcoin_data)
+else:
+    st.error("Failed to load data for the selected company")
