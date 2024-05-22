@@ -152,7 +152,7 @@ if selected_display_name:
         bitcoin_data = bitcoin_data[(bitcoin_data['Exchange Date'] >= start_date) & (bitcoin_data['Exchange Date'] <= end_date)]
         revenue_df = revenue_df[(revenue_df.index >= start_date) & (revenue_df.index <= end_date)]
         
-        beta, correlation_btc = calculate_metrics(company_data, bitcoin
+        beta, correlation_btc = calculate_metrics(company_data, bitcoin)
             st.subheader(f'Financial Metrics for {selected_display_name}')
     st.write(f"**Market Cap:** {company_info[selected_company]['market_cap']}")
     st.write(f"**Beta of stock price against Bitcoin's Price:** {beta: .5f}")
