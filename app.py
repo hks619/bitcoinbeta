@@ -8,6 +8,20 @@ base_url = "https://raw.githubusercontent.com/hks619/bitcoinbeta/main/company_da
 bitcoin_data_url = "https://raw.githubusercontent.com/hks619/bitcoinbeta/main/bitcoin_5yr.xlsx"
 bitcoin_logo_url = "https://upload.wikimedia.org/wikipedia/commons/4/46/Bitcoin.svg"
 
+# Dictionary to map company names to their ticker symbols and market caps
+company_info = {
+    "bitdeer": {"ticker": "NASDAQ:BTDR", "market_cap": "$1.5B"},
+    "bitfarms": {"ticker": "NASDAQ:BITF", "market_cap": "$0.7B"},
+    "cipher": {"ticker": "NASDAQ:CIFR", "market_cap": "$0.9B"},
+    "cleanspark": {"ticker": "NASDAQ:CLSK", "market_cap": "$0.8B"},
+    "core": {"ticker": "NASDAQ:CORZ", "market_cap": "$0.6B"},
+    "hut": {"ticker": "NASDAQ:HUT", "market_cap": "$0.5B"},
+    "iris": {"ticker": "NASDAQ:IREN", "market_cap": "$0.4B"},
+    "marathon": {"ticker": "NASDAQ:MARA", "market_cap": "$1.2B"},
+    "riot": {"ticker": "NASDAQ:RIOT", "market_cap": "$1.1B"},
+    "terawulf": {"ticker": "NASDAQ:WULF", "market_cap": "$0.3B"}
+}
+
 # Function to load data from GitHub
 def load_data_from_github(url):
     response = requests.get(url)
@@ -86,24 +100,39 @@ company_files = [
     "iris_5yr.xlsx", "marathon_5yr.xlsx", "riot_5yr.xlsx", 
     "terawulf_5yr.xlsx"
 ]
-company_names = [f.split('_')[0] for f in company_files]
+company_names = [f.split('_')[0].capitalize() for f in company_files]
 
 # Streamlit App
 st.image(bitcoin_logo_url, width=100)
 st.title("Bitcoin Mining Companies Correlation Analysis")
 
-# Dropdown list for selecting a company
-selected_company = st.selectbox('Select a company:', company_names)
+# Create a list of display names for the dropdown
+display_names = [f"{name.upper()} ({company_info[name.lower()]['ticker']})" for name in company_names]
 
-if selected_company:
+# Dropdown list for selecting a company
+selected_display_name = st.selectbox('Select a company:', display_names)
+
+# Date range selection
+start_date = st.date_input('Start date', value=pd.to_datetime('2019-05-06'))
+end_date = st.date_input('End date', value=pd.to_datetime('2024-05-07'))
+
+if selected_display_name:
+    # Extract the company name from the display name
+    selected_company = selected_display_name.split()[0].lower()
     company_data, bitcoin_data, revenue_df = load_company_data(selected_company)
     if company_data is not None and bitcoin_data is not None and revenue_df is not None:
+        # Filter data based on selected date range
+        company_data = company_data[(company_data['Exchange Date'] >= start_date) & (company_data['Exchange Date'] <= end_date)]
+        bitcoin_data = bitcoin_data[(bitcoin_data['Exchange Date'] >= start_date) & (bitcoin_data['Exchange Date'] <= end_date)]
+        revenue_df = revenue_df[(revenue_df.index >= start_date) & (revenue_df.index <= end_date)]
+        
         beta, correlation_btc = calculate_metrics(company_data, bitcoin_data, revenue_df)
         
-        st.subheader(f'Financial Metrics for {selected_company.capitalize()}')
+        st.subheader(f'Financial Metrics for {selected_display_name}')
+        st.write(f"**Market Cap:** {company_info[selected_company]['market_cap']}")
         st.write(f"**Beta of stock price against Bitcoin's Price:** {beta: .5f}")
         st.write(f"**Correlation of Quarterly Revenue with Bitcoin's Price:** {correlation_btc: .5f}")
     else:
         st.error("Failed to load data for the selected company")
 
-# Run the app with: streamlit run bitfarms_analysis_app.py
+# Run the app with: streamlit run app.py
