@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import requests
 import io
+import matplotlib.pyplot as plt
 
 # Define the base URL for the GitHub repository
 base_url = "https://raw.githubusercontent.com/hks619/bitcoinbeta/main/company_data/"
@@ -10,16 +11,16 @@ bitcoin_logo_url = "https://upload.wikimedia.org/wikipedia/commons/4/46/Bitcoin.
 
 # Dictionary to map company names to their ticker symbols and market caps
 company_info = {
-    "bitdeer": {"ticker": "NASDAQ:BTDR", "market_cap": "$0.70B"},
-    "bitfarms": {"ticker": "NASDAQ:BITF", "market_cap": "$0.73B"},
-    "cipher": {"ticker": "NASDAQ:CIFR", "market_cap": "$1.25B"},
-    "cleanspark": {"ticker": "NASDAQ:CLSK", "market_cap": "$4.2B"},
-    "core": {"ticker": "NASDAQ:CORZ", "market_cap": "$0.72B"},
-    "hut": {"ticker": "NASDAQ:HUT", "market_cap": "$0.86B"},
-    "iris": {"ticker": "NASDAQ:IREN", "market_cap": "$1B"},
-    "marathon": {"ticker": "NASDAQ:MARA", "market_cap": "$5.83B"},
-    "riot": {"ticker": "NASDAQ:RIOT", "market_cap": "$3.06B"},
-    "terawulf": {"ticker": "NASDAQ:WULF", "market_cap": "$0.68B"}
+    "bitdeer": {"ticker": "NASDAQ:BTDR", "market_cap": "$0.70B", "description": "Bitdeer is a leading cryptocurrency mining company..."},
+    "bitfarms": {"ticker": "NASDAQ:BITF", "market_cap": "$0.73B", "description": "Bitfarms is a global Bitcoin self-mining company..."},
+    "cipher": {"ticker": "NASDAQ:CIFR", "market_cap": "$1.25B", "description": "Cipher Mining is a US-based Bitcoin mining company..."},
+    "cleanspark": {"ticker": "NASDAQ:CLSK", "market_cap": "$4.2B", "description": "CleanSpark provides advanced energy software and control technology..."},
+    "core": {"ticker": "NASDAQ:CORZ", "market_cap": "$0.72B", "description": "Core Scientific is a leader in high-performance blockchain infrastructure..."},
+    "hut": {"ticker": "NASDAQ:HUT", "market_cap": "$0.86B", "description": "Hut 8 is a cryptocurrency mining company focused on Bitcoin..."},
+    "iris": {"ticker": "NASDAQ:IREN", "market_cap": "$1B", "description": "Iris Energy is a sustainable Bitcoin mining company..."},
+    "marathon": {"ticker": "NASDAQ:MARA", "market_cap": "$5.83B", "description": "Marathon Digital Holdings is one of the largest Bitcoin mining companies..."},
+    "riot": {"ticker": "NASDAQ:RIOT", "market_cap": "$3.06B", "description": "Riot Blockchain is a Bitcoin mining company focused on supporting the Bitcoin blockchain..."},
+    "terawulf": {"ticker": "NASDAQ:WULF", "market_cap": "$0.68B", "description": "TeraWulf is a leading cryptocurrency mining company with fully integrated facilities..."}
 }
 
 # Function to load data from GitHub
@@ -97,6 +98,17 @@ def calculate_metrics(company_data, bitcoin_data, revenue_df):
     correlation_btc = final_merged_df.corr().loc['Revenue', 'Open_btc']
     return beta, correlation_btc
 
+# Function to plot stock and Bitcoin prices
+def plot_prices(company_data, bitcoin_data):
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.plot(company_data['Exchange Date'], company_data['Open'], label='Company Stock Price')
+    ax.plot(bitcoin_data['Exchange Date'], bitcoin_data['Open'], label='Bitcoin Price')
+    ax.set_xlabel('Date')
+    ax.set_ylabel('Price')
+    ax.set_title('Stock Prices vs Bitcoin Prices')
+    ax.legend()
+    st.pyplot(fig)
+
 # Get the list of companies from the data folder on GitHub
 company_files = [
     "bitdeer_5yr.xlsx", "bitfarms_5yr.xlsx", "cipher_5yr.xlsx", 
@@ -140,13 +152,16 @@ if selected_display_name:
         bitcoin_data = bitcoin_data[(bitcoin_data['Exchange Date'] >= start_date) & (bitcoin_data['Exchange Date'] <= end_date)]
         revenue_df = revenue_df[(revenue_df.index >= start_date) & (revenue_df.index <= end_date)]
         
-        beta, correlation_btc = calculate_metrics(company_data, bitcoin_data, revenue_df)
-        
-        
-        st.write(f"**Market Cap:** {company_info[selected_company]['market_cap']}")
-        st.write(f"**Beta of stock price against Bitcoin's Price:** {beta: .5f}")
-        st.write(f"**Correlation of Quarterly Revenue with Bitcoin's Price:** {correlation_btc: .5f}")
-    else:
-        st.error("Failed to load data for the selected company")
-
-# Run the app with: streamlit run app.py
+        beta, correlation_btc = calculate_metrics(company_data, bitcoin
+            st.subheader(f'Financial Metrics for {selected_display_name}')
+    st.write(f"**Market Cap:** {company_info[selected_company]['market_cap']}")
+    st.write(f"**Beta of stock price against Bitcoin's Price:** {beta: .5f}")
+    st.write(f"**Correlation of Quarterly Revenue with Bitcoin's Price:** {correlation_btc: .5f}")
+    
+    # Add company description
+    st.write(f"**Company Description:** {company_info[selected_company]['description']}")
+    
+    # Plot stock and Bitcoin prices
+    plot_prices(company_data, bitcoin_data)
+else:
+    st.error("Failed to load data for the selected company")
