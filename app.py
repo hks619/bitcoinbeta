@@ -6,6 +6,7 @@ import io
 # Define the base URL for the GitHub repository
 base_url = "https://raw.githubusercontent.com/hks619/bitcoinbeta/main/company_data/"
 bitcoin_data_url = "https://raw.githubusercontent.com/hks619/bitcoinbeta/main/bitcoin_5yr.xlsx"
+bitcoin_logo_url = "https://upload.wikimedia.org/wikipedia/commons/4/46/Bitcoin.svg"  # Example URL for Bitcoin logo
 
 # Function to load data from GitHub
 def load_data_from_github(url):
@@ -88,6 +89,7 @@ company_files = [
 company_names = [f.split('_')[0] for f in company_files]
 
 # Streamlit App
+st.sidebar.image(bitcoin_logo_url, use_column_width=True)  # Add Bitcoin logo to sidebar
 st.title("Bitcoin Mining Companies Financial Analysis")
 
 # Dropdown list for selecting a company
@@ -99,9 +101,9 @@ if selected_company:
         beta, correlation_btc = calculate_metrics(company_data, bitcoin_data, revenue_df)
         
         st.subheader(f'Financial Metrics for {selected_company.capitalize()}')
-        st.write(f"**Beta:** {beta}")
-        st.write(f"**Correlation of Revenue with Bitcoin's Price:** {correlation_btc}")
+        st.write(f"**Beta against Bitcoin:** {beta:.5f}")
+        st.write(f"**Correlation of Revenue with Bitcoin's Price:** {correlation_btc:.5f}")
     else:
         st.error("Failed to load data for the selected company")
 
-# Run the app with: streamlit run bitfarms_analysis_app.py
+# Run the app with: streamlit run app.py
