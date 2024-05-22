@@ -11,16 +11,16 @@ bitcoin_logo_url = "https://upload.wikimedia.org/wikipedia/commons/4/46/Bitcoin.
 
 # Dictionary to map company names to their ticker symbols and market caps
 company_info = {
-    "bitdeer": {"ticker": "NASDAQ:BTDR", "market_cap": "$0.70B", "description": "Bitdeer is a leading cryptocurrency mining company..."},
+    "bitdeer": {"ticker": "NASDAQ:BTDR", "market_cap": "$0.70B", "description": "Bitdeer Technologies Group is a technology company. The Company is engaged in providing cryptocurrency mining solutions. It primarily operates three business lines: proprietary mining, hash rate sharing, and hosting."},
     "bitfarms": {"ticker": "NASDAQ:BITF", "market_cap": "$0.73B", "description": "Bitfarms is a global Bitcoin self-mining company..."},
-    "cipher": {"ticker": "NASDAQ:CIFR", "market_cap": "$1.25B", "description": "Cipher Mining is a US-based Bitcoin mining company..."},
-    "cleanspark": {"ticker": "NASDAQ:CLSK", "market_cap": "$4.2B", "description": "CleanSpark provides advanced energy software and control technology..."},
-    "core": {"ticker": "NASDAQ:CORZ", "market_cap": "$0.72B", "description": "Core Scientific is a leader in high-performance blockchain infrastructure..."},
-    "hut": {"ticker": "NASDAQ:HUT", "market_cap": "$0.86B", "description": "Hut 8 is a cryptocurrency mining company focused on Bitcoin..."},
-    "iris": {"ticker": "NASDAQ:IREN", "market_cap": "$1B", "description": "Iris Energy is a sustainable Bitcoin mining company..."},
-    "marathon": {"ticker": "NASDAQ:MARA", "market_cap": "$5.83B", "description": "Marathon Digital Holdings is one of the largest Bitcoin mining companies..."},
-    "riot": {"ticker": "NASDAQ:RIOT", "market_cap": "$3.06B", "description": "Riot Blockchain is a Bitcoin mining company focused on supporting the Bitcoin blockchain..."},
-    "terawulf": {"ticker": "NASDAQ:WULF", "market_cap": "$0.68B", "description": "TeraWulf is a leading cryptocurrency mining company with fully integrated facilities..."}
+    "cipher": {"ticker": "NASDAQ:CIFR", "market_cap": "$1.25B", "description": "Cipher Mining is an industrial-scale Bitcoin mining company dedicated to expanding and strengthening the Bitcoin network's critical infrastructure in the United States"},
+    "cleanspark": {"ticker": "NASDAQ:CLSK", "market_cap": "$4.2B", "description": "CleanSpark, Inc. is a bitcoin mining technology company, which engages in the management of data centers"},
+    "core": {"ticker": "NASDAQ:CORZ", "market_cap": "$0.72B", "description": "Core Scientific is a Bitcoin mining and digital infrastructure provider. They have data centers in Texas, North Dakota, Kentucky, Georgia, and North Carolina."},
+    "hut": {"ticker": "NASDAQ:HUT", "market_cap": "$0.86B", "description": "Hut 8 is driving innovation while supporting the digital economy through high performance computing (HPC) infrastructure, cutting-edge technology solutions, and digital asset mining."},
+    "iris": {"ticker": "NASDAQ:IREN", "market_cap": "$1B", "description": "Iris Energy Ltd is a Bitcoin mining company. It builds, owns, and operates data centers and electrical infrastructure for the mining of Bitcoin powered by renewable energy."},
+    "marathon": {"ticker": "NASDAQ:MARA", "market_cap": "$5.83B", "description": "Marathon Digital Holdings, Inc. is a digital asset technology company, which engages in mining cryptocurrencies with a focus on the blockchain ecosystem and the generation of digital assets."},
+    "riot": {"ticker": "NASDAQ:RIOT", "market_cap": "$3.06B", "description": "Riot Platforms, Inc. is a vertically integrated bitcoin mining company principally engaged in enhancing its capabilities to mine bitcoin in support of the bitcoin blockchain."},
+    "terawulf": {"ticker": "NASDAQ:WULF", "market_cap": "$0.68B", "description": "TeraWulf is an infrastructure-focused bitcoin mining company accelerating the transition to a zero-carbon future."}
 }
 
 # Function to load data from GitHub
@@ -100,13 +100,22 @@ def calculate_metrics(company_data, bitcoin_data, revenue_df):
 
 # Function to plot stock and Bitcoin prices
 def plot_prices(company_data, bitcoin_data):
-    fig, ax = plt.subplots(figsize=(10, 5))
-    ax.plot(company_data['Exchange Date'], company_data['Open'], label='Company Stock Price')
-    ax.plot(bitcoin_data['Exchange Date'], bitcoin_data['Open'], label='Bitcoin Price')
-    ax.set_xlabel('Date')
-    ax.set_ylabel('Price')
-    ax.set_title('Stock Prices vs Bitcoin Prices')
-    ax.legend()
+    fig, ax1 = plt.subplots(figsize=(10, 5))
+
+    color = 'tab:blue'
+    ax1.set_xlabel('Date')
+    ax1.set_ylabel('Company Stock Price', color=color)
+    ax1.plot(company_data['Exchange Date'], company_data['Open'], color=color, label='Company Stock Price')
+    ax1.tick_params(axis='y', labelcolor=color)
+
+    ax2 = ax1.twinx()  
+    color = 'tab:red'
+    ax2.set_ylabel('Bitcoin Price', color=color)
+    ax2.plot(bitcoin_data['Exchange Date'], bitcoin_data['Open'], color=color, label='Bitcoin Price')
+    ax2.tick_params(axis='y', labelcolor=color)
+
+    fig.tight_layout()  
+    plt.title('Stock Prices vs Bitcoin Prices')
     st.pyplot(fig)
 
 # Get the list of companies from the data folder on GitHub
