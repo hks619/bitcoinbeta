@@ -142,7 +142,7 @@ if selected_display_name:
         
         beta, correlation_btc = calculate_metrics(company_data, bitcoin_data, revenue_df)
         
-        st.subheader(f'Financial Metrics for {selected_display_name}')
+        st.subheader(f'{selected_display_name}')
         st.write(f"**Market Cap:** {company_info[selected_company]['market_cap']}")
         st.write(f"**Beta of stock price against Bitcoin's Price:** {beta: .5f}")
         st.write(f"**Correlation of Quarterly Revenue with Bitcoin's Price:** {correlation_btc: .5f}")
