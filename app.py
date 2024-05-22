@@ -86,7 +86,7 @@ company_files = [
     "iris_5yr.xlsx", "marathon_5yr.xlsx", "riot_5yr.xlsx", 
     "terawulf_5yr.xlsx"
 ]
-company_names = [f.split('_')[0].capitalize() for f in company_files]
+company_names = [f.split('_')[0] for f in company_files]
 
 # Streamlit App
 st.image(bitcoin_logo_url, width=100)
