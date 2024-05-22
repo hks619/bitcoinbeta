@@ -113,14 +113,18 @@ display_names = [f"{name.upper()} ({company_info[name.lower()]['ticker']})" for 
 selected_display_name = st.selectbox('Select a company:', display_names)
 
 # Date range selection
-start_date = st.date_input('Start date', value=pd.to_datetime('2019-05-06'))
-end_date = st.date_input('End date', value=pd.to_datetime('2024-05-07'))
+start_date = st.date_input('Start date', value=pd.to_datetime('2019-05-06')).strftime('%Y-%m-%d')
+end_date = st.date_input('End date', value=pd.to_datetime('2024-05-07')).strftime('%Y-%m-%d')
 
 if selected_display_name:
     # Extract the company name from the display name
     selected_company = selected_display_name.split()[0].lower()
     company_data, bitcoin_data, revenue_df = load_company_data(selected_company)
     if company_data is not None and bitcoin_data is not None and revenue_df is not None:
+        # Convert start_date and end_date to datetime64[ns]
+        start_date = pd.to_datetime(start_date)
+        end_date = pd.to_datetime(end_date)
+
         # Filter data based on selected date range
         company_data = company_data[(company_data['Exchange Date'] >= start_date) & (company_data['Exchange Date'] <= end_date)]
         bitcoin_data = bitcoin_data[(bitcoin_data['Exchange Date'] >= start_date) & (bitcoin_data['Exchange Date'] <= end_date)]
