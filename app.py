@@ -86,7 +86,7 @@ company_files = [
     "iris_5yr.xlsx", "marathon_5yr.xlsx", "riot_5yr.xlsx", 
     "terawulf_5yr.xlsx"
 ]
-company_names = [f.split('_')[0] for f in company_files]
+company_names = [f.split('_')[0].capitalize() for f in company_files]
 
 # Streamlit App
 st.image(bitcoin_logo_url, width=100)
@@ -101,8 +101,8 @@ if selected_company:
         beta, correlation_btc = calculate_metrics(company_data, bitcoin_data, revenue_df)
         
         st.subheader(f'Financial Metrics for {selected_company.capitalize()}')
-        st.write(f"**Beta of stock price against Bitcoin's Price:** {beta}")
-        st.write(f"**Correlation of Quarterly Revenue with Bitcoin's Price:** {correlation_btc}")
+        st.write(f"**Beta of stock price against Bitcoin's Price:** {beta: .5f}")
+        st.write(f"**Correlation of Quarterly Revenue with Bitcoin's Price:** {correlation_btc: .5f}")
     else:
         st.error("Failed to load data for the selected company")
 
