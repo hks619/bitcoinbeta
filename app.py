@@ -70,8 +70,8 @@ def load_company_data(company_name):
 # Function to calculate beta and correlation
 def calculate_metrics(company_data, bitcoin_data, revenue_df):
     # Ensure the date columns are in datetime format
-    company_data['Exchange Date'] = pd.to_datetime(company_data['Exchange Date'])
-    bitcoin_data['Exchange Date'] = pd.to_datetime(bitcoin_data['Exchange Date'])
+    company_data['Exchange Date'] = pd.to_datetime(company_data['Exchange Date'], errors='coerce')
+    bitcoin_data['Exchange Date'] = pd.to_datetime(bitcoin_data['Exchange Date'], errors='coerce')
     
     # Merge data on date
     merged_data = pd.merge(bitcoin_data[['Exchange Date', 'Open']],
@@ -122,14 +122,18 @@ max_date = pd.to_datetime('2024-05-07')
 start_date = st.date_input('Start date', value=min_date, min_value=min_date, max_value=max_date)
 end_date = st.date_input('End date', value=max_date, min_value=min_date, max_value=max_date)
 
+# Convert start_date and end_date to datetime64
+start_date = pd.to_datetime(start_date)
+end_date = pd.to_datetime(end_date)
+
 if selected_display_name:
     # Extract the company name from the display name
     selected_company = selected_display_name.split()[0].lower()
     company_data, bitcoin_data, revenue_df = load_company_data(selected_company)
     if company_data is not None and bitcoin_data is not None and revenue_df is not None:
         # Ensure the date columns are in datetime format
-        company_data['Exchange Date'] = pd.to_datetime(company_data['Exchange Date'])
-        bitcoin_data['Exchange Date'] = pd.to_datetime(bitcoin_data['Exchange Date'])
+        company_data['Exchange Date'] = pd.to_datetime(company_data['Exchange Date'], errors='coerce')
+        bitcoin_data['Exchange Date'] = pd.to_datetime(bitcoin_data['Exchange Date'], errors='coerce')
 
         # Filter data based on selected date range
         company_data = company_data[(company_data['Exchange Date'] >= start_date) & (company_data['Exchange Date'] <= end_date)]
