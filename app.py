@@ -43,6 +43,10 @@ def load_company_data(company_name):
     if company_data is None or bitcoin_data is None or income_statement is None:
         return None, None, None
 
+    # Convert Exchange Date columns to datetime
+    company_data['Exchange Date'] = pd.to_datetime(company_data['Exchange Date'], errors='coerce')
+    bitcoin_data['Exchange Date'] = pd.to_datetime(bitcoin_data['Exchange Date'], errors='coerce')
+
     # Extract the header row containing the dates, excluding non-date columns
     header_row = income_statement.columns[1:]
 
@@ -123,6 +127,10 @@ if selected_display_name:
     selected_company = selected_display_name.split()[0].lower()
     company_data, bitcoin_data, revenue_df = load_company_data(selected_company)
     if company_data is not None and bitcoin_data is not None and revenue_df is not None:
+        # Ensure the date columns are in datetime format
+        company_data['Exchange Date'] = pd.to_datetime(company_data['Exchange Date'])
+        bitcoin_data['Exchange Date'] = pd.to_datetime(bitcoin_data['Exchange Date'])
+
         # Filter data based on selected date range
         company_data = company_data[(company_data['Exchange Date'] >= start_date) & (company_data['Exchange Date'] <= end_date)]
         bitcoin_data = bitcoin_data[(bitcoin_data['Exchange Date'] >= start_date) & (bitcoin_data['Exchange Date'] <= end_date)]
