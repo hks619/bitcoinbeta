@@ -12,7 +12,7 @@ bitcoin_logo_url = "https://upload.wikimedia.org/wikipedia/commons/4/46/Bitcoin.
 # Dictionary to map company names to their ticker symbols and market caps
 company_info = {
     "bitdeer": {"ticker": "NASDAQ:BTDR", "market_cap": "$0.70B", "description": "Bitdeer Technologies Group is a technology company. The Company is engaged in providing cryptocurrency mining solutions. It primarily operates three business lines: proprietary mining, hash rate sharing, and hosting."},
-    "bitfarms": {"ticker": "NASDAQ:BITF", "market_cap": "$0.73B", "description": "Bitfarms is a global Bitcoin self-mining company..."},
+    "bitfarms": {"ticker": "NASDAQ:BITF", "market_cap": "$0.73B", "description": "Bitfarms is a global Bitcoin self-mining company, running vertically integrated mining operations with onsite technical repair, proprietary data analytics and Company-owned electrical engineering and installation services to deliver high operational performance and uptime."},
     "cipher": {"ticker": "NASDAQ:CIFR", "market_cap": "$1.25B", "description": "Cipher Mining is an industrial-scale Bitcoin mining company dedicated to expanding and strengthening the Bitcoin network's critical infrastructure in the United States"},
     "cleanspark": {"ticker": "NASDAQ:CLSK", "market_cap": "$4.2B", "description": "CleanSpark, Inc. is a bitcoin mining technology company, which engages in the management of data centers"},
     "core": {"ticker": "NASDAQ:CORZ", "market_cap": "$0.72B", "description": "Core Scientific is a Bitcoin mining and digital infrastructure provider. They have data centers in Texas, North Dakota, Kentucky, Georgia, and North Carolina."},
@@ -163,7 +163,7 @@ if selected_display_name:
         
         beta, correlation_btc = calculate_metrics(company_data, bitcoin_data, revenue_df)
         
-        st.subheader(f'Financial Metrics for {selected_display_name}')
+        st.subheader(f'Financial Metrics')
         st.write(f"**Market Cap:** {company_info[selected_company]['market_cap']}")
         st.write(f"**Beta of stock price against Bitcoin's Price:** {beta: .5f}")
         st.write(f"**Correlation of Quarterly Revenue with Bitcoin's Price:** {correlation_btc: .5f}")
