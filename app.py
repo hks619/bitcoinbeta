@@ -156,7 +156,8 @@ if selected_display_name:
         
         st.subheader(f'Financial Metrics for {selected_display_name}')
         st.write(f"**Market Cap:** {company_info[selected_company]['market_cap']}")
-        st.write(f"**Beta of stock price against Bitcoin's Price:** {
+        st.write(f"**Beta of stock price against Bitcoin's Price:** {beta: .5f}")
+        st.write(f"**Correlation of Quarterly Revenue with Bitcoin's Price:** {correlation_btc: .5f}")
                 # Add company description
     st.write(f"**Company Description:** {company_info[selected_company]['description']}")
     
