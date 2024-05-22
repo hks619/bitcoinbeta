@@ -8,6 +8,20 @@ base_url = "https://raw.githubusercontent.com/hks619/bitcoinbeta/main/company_da
 bitcoin_data_url = "https://raw.githubusercontent.com/hks619/bitcoinbeta/main/bitcoin_5yr.xlsx"
 bitcoin_logo_url = "https://upload.wikimedia.org/wikipedia/commons/4/46/Bitcoin.svg"  # Example URL for Bitcoin logo
 
+# Dictionary to map company names to their ticker symbols
+company_tickers = {
+    "bitdeer": "NASDAQ:BTDR",
+    "bitfarms": "NASDAQ:BITF",
+    "cipher": "NASDAQ:CIFR",
+    "cleanspark": "NASDAQ:CLSK",
+    "core": "NASDAQ:CORZ",
+    "hut": "NASDAQ:HUT",
+    "iris": "NASDAQ:IREN",
+    "marathon": "NASDAQ:MARA",
+    "riot": "NASDAQ:RIOT",
+    "terawulf": "NASDAQ:WULF"
+}
+
 # Function to load data from GitHub
 def load_data_from_github(url):
     response = requests.get(url)
@@ -89,18 +103,23 @@ company_files = [
 company_names = [f.split('_')[0] for f in company_files]
 
 # Streamlit App
-st.sidebar.image(bitcoin_logo_url, use_column_width=True)  # Add Bitcoin logo to sidebar
+st.image(bitcoin_logo_url, width=100)  # Add Bitcoin logo to main page
 st.title("Bitcoin Mining Companies Financial Analysis")
 
-# Dropdown list for selecting a company
-selected_company = st.selectbox('Select a company:', company_names)
+# Create a list of display names for the dropdown
+display_names = [f"{name.upper()} ({company_tickers[name]})" for name in company_names]
 
-if selected_company:
+# Dropdown list for selecting a company
+selected_display_name = st.selectbox('Select a company:', display_names)
+
+if selected_display_name:
+    # Extract the company name from the display name
+    selected_company = selected_display_name.split()[0].lower()
     company_data, bitcoin_data, revenue_df = load_company_data(selected_company)
     if company_data is not None and bitcoin_data is not None and revenue_df is not None:
         beta, correlation_btc = calculate_metrics(company_data, bitcoin_data, revenue_df)
         
-        st.subheader(f'Financial Metrics for {selected_company.capitalize()}')
+        st.subheader(f'Financial Metrics for {selected_display_name}')
         st.write(f"**Beta against Bitcoin:** {beta:.5f}")
         st.write(f"**Correlation of Revenue with Bitcoin's Price:** {correlation_btc:.5f}")
     else:
