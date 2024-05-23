@@ -1,16 +1,15 @@
 # bitcoinbeta
 small project to get beta of bitcoin mining companies against the bitcoin price
 
-
-Bitcoin Mining company: Financial analyses using python
+# Bitcoin Mining company: Financial analyses using python
 
 The rise in Bitcoin and cryptocurrency has led many companies and governments to start mining Bitcoin using their computers. This project looks at how much Bitcoin mining companies depend on the price of Bitcoin especially regarding the recent halving. A split in rewards for new Bitcoin blocks mined that takes place every four years.
 
-The project has two main goals:
+The project has three main goals:
 
-To see how changes in Bitcoin's price affect the stock prices of the ten largest bitcoin mining companies by market cap
-To see how much the quarterly revenue of bitcoin mining companies correlates with price fluctuations
-To visualize the data on streamlit: https://bitcoinbeta.streamlit.app/
+- To see how changes in Bitcoin's price affect the stock prices of the ten largest bitcoin mining companies by market cap
+- To see how much the quarterly revenue of bitcoin mining companies correlates with price fluctuations
+- To visualize the data on streamlit: https://bitcoinbeta.streamlit.app/
 
 We collect data on the stock prices of ten leading Bitcoin mining companies and historical Bitcoin prices from a GitHub repository. We also gather information about each company, like their stock ticker symbol, market cap, and a short description. The data is cleaned and prepared for analysis, making sure dates are in the correct format and revenue data is aligned.
 
@@ -26,8 +25,8 @@ disclaimer: chatgpt was consulted for this project
 
 This project was completed by:
 
-Benjamin Bolliger - BB
-Joaquim Graber - topG
-Hari Krishnan Suresh - hks619 
+- Benjamin Bolliger - BB
+- Joaquim Graber - topG
+- Hari Krishnan Suresh - hks619 
 
 23/05/2024
