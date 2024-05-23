@@ -18,7 +18,11 @@ We calculate the beta of each company's stock price against Bitcoin's price to m
 
 An interactive Streamlit web app allows users to choose from ten different companies and time periods within last 5 years for analysis. The app displays each company’s market cap, beta, and revenue correlation with Bitcoin’s price, along with plots comparing stock prices to Bitcoin prices over the chosen period.
 
-This project gives useful insights into how Bitcoin mining companies perform financially in relation to Bitcoin's price. The Streamlit app helps users explore these relationships, aiding in better understanding the cryptocurrency market. The project uses Python programming and statistical tools like Pandas, Matplotlib, and NumPy to provide detailed insights into the dependency of these companies on the Bitcoin prices, especially considering the regular halvings.
+This project gives useful insights into how Bitcoin mining companies perform financially in relation to Bitcoin's price. The Streamlit app helps users explore these relationships, aiding in better understanding the cryptocurrency market. The project uses Python programming and statistical tools like Pandas, Matplotlib, and NumPy to provide detailed insights into the dependency of these companies on the Bitcoin prices.
+
+Future improvements to this project include: If we had access to plugins that allow us to retrieve financial data, an improvement would be automating the gathering of financial data instead of manually handling downloaded data. Another improvement would be enabling calculation of beta and correlation with revenue for data beyond the 5 year limit that we currently have. 
+
+disclaimer: chatgpt was consulted for this project
 
 This project was completed by:
 
