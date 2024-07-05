@@ -21,12 +21,12 @@ This project gives useful insights into how Bitcoin mining companies perform fin
 
 Future improvements to this project include: If we had access to plugins that allow us to retrieve financial data, an improvement would be automating the gathering of financial data instead of manually handling downloaded data. Another improvement would be enabling calculation of beta and correlation with revenue for data beyond the 5 year limit that we currently have. 
 
-disclaimer: chatgpt was consulted for this project
+
 
 This project was completed by:
 
-- Benjamin Bolliger - BB
-- Joaquim Graber - topG
-- Hari Krishnan Suresh - hks619 
+- Benjamin Bolliger
+- Joaquim Graber
+- Hari Krishnan Suresh
 
 23/05/2024
